@@ -34,16 +34,16 @@ let difficultyLevel = 1;
 
 let gameStarted = false;
 
-let player1JumpCount = 0;  // Double jump için sayaç
-let player2JumpCount = 0;  // Double jump için sayaç
+let player1JumpCount = 0;  
+let player2JumpCount = 0;  
 
-let isMobile = false; // Mobil cihaz kontrolü
-let buttonContainer = null; // Mobil butonlar için konteyner
+let isMobile = false; 
+let buttonContainer = null; 
 
 player1.style.backgroundColor = "blue";
 player2.style.backgroundColor = "red";
 
-// Başlangıç mesajı
+
 let startMessage = document.createElement("div");
 startMessage.textContent = "Başlamak için herhangi bir tuşa basın!";
 startMessage.style.position = "absolute";
@@ -54,7 +54,6 @@ startMessage.style.fontSize = "24px";
 startMessage.style.color = "white";
 gameArea.appendChild(startMessage);
 
-// Mutlu yüz çizme fonksiyonu
 function drawHappyFace(player) {
     let face = document.createElement("canvas");
     face.width = 40;
@@ -65,29 +64,29 @@ function drawHappyFace(player) {
 
     let ctx = face.getContext("2d");
     ctx.beginPath();
-    ctx.arc(20, 20, 15, 0, Math.PI * 2, true); // Yüz
+    ctx.arc(20, 20, 15, 0, Math.PI * 2, true);
     ctx.fillStyle = "yellow";
     ctx.fill();
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.arc(13, 13, 3, 0, Math.PI * 2, true); // Sol göz
-    ctx.arc(27, 13, 3, 0, Math.PI * 2, true); // Sağ göz
+    ctx.arc(13, 13, 3, 0, Math.PI * 2, true); 
+    ctx.arc(27, 13, 3, 0, Math.PI * 2, true); 
     ctx.fillStyle = "black";
     ctx.fill();
 
     ctx.beginPath();
-    ctx.arc(20, 20, 10, 0, Math.PI, false); // Ağız
+    ctx.arc(20, 20, 10, 0, Math.PI, false); 
     ctx.stroke();
 
     player.appendChild(face);
 }
 
-// Oyuncu 1 ve 2'ye yüz ekleme
+
 drawHappyFace(player1);
 drawHappyFace(player2);
 
-// Cihaz türünü kontrol etme (mobil mi bilgisayar mı?)
+
 function detectDevice() {
     const userAgent = navigator.userAgent.toLowerCase();
     if (/android|webos|iphone|ipod|blackberry|iemobile|opera mini/.test(userAgent)) {
@@ -95,7 +94,7 @@ function detectDevice() {
     }
 }
 
-// Mobilde butonları oluşturma
+// Mobile buttons (fail lol)
 function createMobileControls() {
     buttonContainer = document.createElement("div");
     buttonContainer.style.position = "absolute";
@@ -149,7 +148,7 @@ function createMobileControls() {
     gameArea.appendChild(buttonContainer);
 }
 
-// Başlangıçta platformları ve engelleri oluşturma
+
 function createPlatform() {
     let platform = document.createElement("div");
     let randomHeight = Math.random() * 150 + 100; 
@@ -163,7 +162,7 @@ function createPlatform() {
     platforms.push(platform);
 }
 
-// Engelleri oluşturma
+
 function createObstacle() {
     let obstacle = document.createElement("div");
     let randomHeight = Math.random() * 200 + 50; 
@@ -173,14 +172,14 @@ function createObstacle() {
     obstacle.style.left = randomLeft + "px";
     obstacle.style.bottom = randomHeight + "px";
 
-    // Engel rengi ekleyelim
+   
     obstacle.style.backgroundColor = randomHeight > 150 ? "red" : "green"; 
 
     gameArea.appendChild(obstacle);
     obstacles.push(obstacle);
 }
 
-// Oyuncuları hareket ettirme
+
 function movePlayer1() {
     if (isPlayer1Jumping) {
         player1Velocity -= gravity;
@@ -188,7 +187,7 @@ function movePlayer1() {
         if (player1Bottom <= 0) {
             player1Bottom = 0;
             isPlayer1Jumping = false;
-            player1JumpCount = 0;  // İlk zıplama bittiğinde sayacı sıfırla
+            player1JumpCount = 0;  
         }
     }
 
@@ -206,7 +205,7 @@ function movePlayer1() {
             player1Velocity = 0;
             player1Bottom = platBottom + 20;
             isPlayer1Jumping = false;
-            player1JumpCount = 0;  // Platforma inince sayacı sıfırla
+            player1JumpCount = 0;  
         }
     }
 
@@ -244,7 +243,7 @@ function movePlayer2() {
         if (player2Bottom <= 0) {
             player2Bottom = 0;
             isPlayer2Jumping = false;
-            player2JumpCount = 0;  // İlk zıplama bittiğinde sayacı sıfırla
+            player2JumpCount = 0;  
         }
     }
 
@@ -262,7 +261,7 @@ function movePlayer2() {
             player2Velocity = 0;
             player2Bottom = platBottom + 20;
             isPlayer2Jumping = false;
-            player2JumpCount = 0;  // Platforma inince sayacı sıfırla
+            player2JumpCount = 0; 
         }
     }
 
@@ -351,32 +350,31 @@ function resetGame() {
     platforms = [];
     obstacles = [];
     gameWidth = 5000;
-    player1JumpCount = 0;  // Double jump sayacını sıfırla
-    player2JumpCount = 0;  // Double jump sayacını sıfırla
+    player1JumpCount = 0;  
+    player2JumpCount = 0; 
     alert("Oyun sıfırlanıyor...");
 }
 
 document.addEventListener("keydown", function(event) {
     if (!gameStarted) {
         gameStarted = true;
-        detectDevice(); // Cihaz türünü tespit et
+        detectDevice(); 
         gameArea.removeChild(startMessage); 
         gameLoop(); 
         
-        // Mobil kullanıcılar için butonları oluştur
+        
         if (isMobile) {
             createMobileControls();
         }
     }
 
-    // Player 1 için
+   
     if (event.key === "w" && player1JumpCount < 2) {
         player1Velocity = jumpStrength;
         isPlayer1Jumping = true;
         player1JumpCount++;
     }
 
-    // Player 2 için
     if (event.key === "ArrowUp" && player2JumpCount < 2) {
         player2Velocity = jumpStrength;
         isPlayer2Jumping = true;
@@ -413,3 +411,5 @@ document.addEventListener("keyup", function(event) {
         isPlayer2MovingRight = false;
     }
 });
+
+//emirr4211 is here ✌️
