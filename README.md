@@ -16,7 +16,7 @@ The best way to learn is by playing. Explore the glitches and enjoy the chaos!
 Contribution
 Since this project is open-source and bug-heavy, feel free to fork it, fix something, or break it even more. Pull requests are always welcome.
 
-Game: https://4211emirr.github.io/happyblocks/
+Game: https://emii4211.github.io/happyblocks/
 
 **emirr4211 is here.**
 
